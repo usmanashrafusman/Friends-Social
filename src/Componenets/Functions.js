@@ -2,17 +2,13 @@ import {
   doc,
   onSnapshot,
   collection,
-  setDoc,
   query,
   where,
-  updateDoc,
   getDocs, 
-  orderBy, 
-  startAt
+
 } from "firebase/firestore";
-import { app, db, auth, storage } from "./FirebaseConfig";
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { onAuthStateChanged, updateEmail } from "firebase/auth";
+import {db, auth } from "./FirebaseConfig";
+import { onAuthStateChanged } from "firebase/auth";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import MuiDrawer from "@mui/material/Drawer";
@@ -23,7 +19,7 @@ export const gettingUserInfo = (setUserInfo) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      console.log(user)
+      // console.log(user)
       onSnapshot(doc(db, "Accounts", uid), (doc) => {
         setUserInfo(doc.data())
       })
@@ -166,74 +162,9 @@ export const searchResult =async (
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     setSearchedResult((val) => [...val, doc.data()]);
-    console.log(doc.id, " => ", doc.data());
+    // console.log(doc.id, " => ", doc.data());
 });
-  // doc.data() is never undefined for query doc snapshots
-    // result.push(doc.data())
-    // console.log(result)
-// onSnapshot(q, (querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//       setSearchedResult((val) => [...val, doc.data()]);
-//     });
-//     console.log("Current cities in CA: ", searchedResult);
-//   });
-
-
-
-//     const q = query(
-//     collection(db, "Accounts"),
-//     where("nameOfuser", "array-contains", inputSearch)
-//   );
   
-
-// onSnapshot(q, (querySnapshot) => {
-//     querySnapshot.forEach((doc) => {
-//       setSearchedResult((val) => [...val, doc.data()]);
-//     });
-//     console.log("Current cities in CA: ", searchedResult);
-//   });
-
-  // const q = query(
-  //   collection(db, "Accounts"),
-  //   where("fullName", ">=", inputSearch),
-  //   where("fullName", "<=", inputSearch + "uf8ff")
-  // );
-  // const q2 = query(
-  //   collection(db, "Accounts"),
-  //   where("lastName", ">=", inputSearch),
-  //   where("lastName", "<=", inputSearch + "uf8ff")
-  // );
-  // const q2 = query(collection(db, "Accounts"), where("lastName", "==", inputSearch))
-  // const q3 = query(collection(db, "Accounts"), where("email", "==", inputSearch))
-  // const result = [];
-  // onSnapshot(q, (querySnapshot) => {
-  //   querySnapshot.forEach((doc) => {
-  //     setSearchedResult((preValue) => [...preValue, doc.data()]);
-  //   });
-  //   console.log("Current cities in CA: ", searchedResult);
-  // });
-  // onSnapshot(q2, (querySnapshot) => {
-  //   querySnapshot.forEach((doc) => {
-  //     setSearchedResult((preValue) => [...preValue, doc.data()]);
-  //   });
-  //   console.log("Current cities in CA: ", searchedResult);
-  // });
-  // onSnapshot(q2, (querySnapshot) => {
-
-  //   querySnapshot.forEach((doc) => {
-  //     setSearchedResult((preValue)=>[...preValue, doc.data()])
-
-  //   });
-  //   console.log("Current cities in CA: ", result);
-  // });
-
-  // onSnapshot(q3, (querySnapshot) => {
-
-  //   querySnapshot.forEach((doc) => {
-  //     setSearchedResult((preValue)=>[...preValue, doc.data()])
-  //   });
-  //   console.log("Current cities in CA: ", result);
-  // });
 
 };
 

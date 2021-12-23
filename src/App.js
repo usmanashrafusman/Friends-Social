@@ -9,11 +9,12 @@ import Profile from './Componenets/Profile';
 import PostDiv from './Componenets/PostDiv'
 import AllUsers from './Componenets/AllUsers';
 import Settings from './Componenets/Settings'
+import UserProfile from './Componenets/UserProfile'
 
 
 function App() {
 
-  const status = false;
+
   return (
 <Provider store={store}>
 
@@ -30,6 +31,8 @@ function App() {
           <Route exact path="/post" element={<><Home /><PostDiv/></>}/>
 
           <Route exact path="/users" element={<><Home /><AllUsers/></>}/>
+
+          <Route exact path="/user" element={<><Home /><UserProfile/></>}/>
 
           <Route exact path="/setting" element={<><Home /><Settings/></>}/>
 

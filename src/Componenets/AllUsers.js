@@ -1,5 +1,5 @@
 import React , {useState,useEffect}from 'react'
-import { collection,  doc , onSnapshot} from "firebase/firestore";
+import { collection,  onSnapshot} from "firebase/firestore";
 import {db,auth} from './FirebaseConfig'
 import { onAuthStateChanged } from "firebase/auth";
 import CardHeader from './CardHeader';
@@ -14,8 +14,7 @@ useEffect(() => {
 
     onAuthStateChanged(auth, (user) => {
         if (user) {
-          const uid = user.uid;
-          console.log(user)
+          // console.log(user)
           onSnapshot(collection(db, "Accounts"), (snapShot) =>
           setAllUsers(snapShot.docs.map((doc) => doc.data()))
         );

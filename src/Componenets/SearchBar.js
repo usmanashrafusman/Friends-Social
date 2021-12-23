@@ -1,21 +1,15 @@
-import React, {useState , useRef , useEffect} from 'react'
-import {searchResult , Search , SearchIconWrapper, StyledInputBase, showUser} from './Functions'
+import React, {useState , useRef } from 'react'
+import {Search , SearchIconWrapper, StyledInputBase, showUser} from './Functions'
 import Stack from "@mui/material/Stack";
 import SearchIcon from "@mui/icons-material/Search";
 import { useNavigate } from "react-router-dom";
 import SuggestUsers from "./SuggestUsers";
 import {db} from './FirebaseConfig'
 import {
-    doc,
-    onSnapshot,
     collection,
-    setDoc,
     query,
     where,
-    updateDoc,
     getDocs, 
-    orderBy, 
-    startAt
   } from "firebase/firestore";
 
 export default function SearchBar() {
@@ -28,7 +22,7 @@ const showResults = async()=>{
     setSearchedResult([]);
     let queryS = inputed.current.children[0].value;
     queryS = queryS.split(" ").join("").toLowerCase()
-    console.log(queryS);
+    // console.log(queryS);
     setSearchedResult([]);
     const q = query(
         collection(db, "Accounts"),
@@ -38,10 +32,10 @@ const showResults = async()=>{
       setSearchedResult([]);
       querySnapshot.forEach((doc) => {
         setSearchedResult((val) => [...val, doc.data()]);
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
     }); 
 
-    if (queryS.length == 0){
+    if (queryS.length === 0){
         setSearchedResult([]);
     }
 }

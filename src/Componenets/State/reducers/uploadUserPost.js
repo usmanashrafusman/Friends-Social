@@ -1,12 +1,9 @@
 import { ref, uploadBytesResumable ,getDownloadURL} from "firebase/storage";
 import {
-  collection,
   setDoc,
-  query,
-  where,
   doc
 } from "firebase/firestore";
-import {app , db, auth , storage} from "../../FirebaseConfig";
+import { db , storage} from "../../FirebaseConfig";
 
 
 const reducer = (state=0, action)=>{
@@ -24,8 +21,9 @@ const reducer = (state=0, action)=>{
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            const progress =
+            let progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progress.toString();
           },
           (error) => {
             alert("An Error Occured During Uploading Your Picture");

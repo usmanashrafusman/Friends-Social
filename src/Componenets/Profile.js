@@ -1,12 +1,6 @@
-import React, {useState,useEffect,useLayoutEffect} from 'react'
-import Avatar from "@mui/material/Avatar";
+import React, {useState,useLayoutEffect} from 'react'
 import { db } from './FirebaseConfig';
-import {DrawerHeader,
-    Drawer
-     } from './Functions'
 import { doc, onSnapshot, collection } from "firebase/firestore";
-import { width } from '@mui/system';
-import Box from "@mui/material/Box";
 import { useParams } from 'react-router-dom';
 import Card from "@mui/material/Card";
 import CardHeader from "./CardHeader";
@@ -17,18 +11,15 @@ import CardFooter from "./CardFooter";
 
 export default function Profile() {
       const {docID} = useParams();
-  const [uid , setUID] = useState(docID)
-console.log(docID);
-
     const [currentUer , setCrrentUser] = useState("")
     const [userPost , setUserPost] = useState([])
 
     useLayoutEffect(() => {
-      setUID(docID)
-        console.log(docID)
+
+        // console.log(docID)
         onSnapshot(doc(db, "Accounts", docID), (doc) => {
             setCrrentUser(doc.data())
-            console.log("Current data: ", doc.data());
+            // console.log("Current data: ", doc.data());
         });
 
         onSnapshot(collection(db, "Accounts", docID, "post"), (snapShot) =>
@@ -59,7 +50,7 @@ console.log(docID);
          <div className="allPost">
 
           {userPost.map((e, index) => (
-            <Card sx={{ maxWidth: 345 }} key={index}>
+            <Card className="wd-80" key={index}>
               <CardHeader
                 name={currentUer.firstName + " " + currentUer.lastName}
                 time={e.dateString + " " + e.timeString}

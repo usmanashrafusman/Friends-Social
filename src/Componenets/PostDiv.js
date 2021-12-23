@@ -1,4 +1,4 @@
-import React , {useEffect, useState}from 'react'
+import React , {useEffect, useState, useLayoutEffect}from 'react'
 import {auth} from './FirebaseConfig'
 import Card from "@mui/material/Card";
 import CardHeader from "./CardHeader";
@@ -7,7 +7,7 @@ import CardFooter from "./CardFooter";
 import { collection, onSnapshot } from "firebase/firestore";
 import {db} from './FirebaseConfig'
 import { onAuthStateChanged } from "firebase/auth";
-import { showUser } from './Functions';
+import { doc } from 'firebase/firestore';
 
 export default function PostDiv() {
     const [post, setPost] = useState([]);
@@ -21,32 +21,42 @@ export default function PostDiv() {
         if (user) {
        
           const uid = user.uid;
-          console.log(uid)
+          // console.log(uid)
           onSnapshot(collection(db, "Accounts", uid, "post"), (snapShot) =>
           setPost(snapShot.docs.map((doc) => doc.data()))
         );
   
         } else {
-          console.log("NOT FOdUND")
+          // console.log("NOT FOdUND")
         }
       });
 
 
     }, [])
-    const userInfo = {
-        firstName:"A",
-        lastName:"B",
-        userPhoto:"C",
-      
-    }
-
+    const [userInfo, setUserInfo] = useState({});
+  
+  
+  
+  
+  
+    useLayoutEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid;
+          // console.log(user);
+          onSnapshot(doc(db, "Accounts", uid), (doc) => {
+            setUserInfo(doc.data());
+          });
+        }
+      });
+    }, []);
     
 
 
     return (
         <div className="allPost" style={{marginLeft : "75px"}}>
         {post.map((e, index) => (
-          <Card sx={{ maxWidth: 345 }} key={index}>
+          <Card className="wd-80" key={index}>
             <CardHeader
               name={userInfo.firstName + " " + userInfo.lastName}
               time={e.dateString + " " + e.timeString}

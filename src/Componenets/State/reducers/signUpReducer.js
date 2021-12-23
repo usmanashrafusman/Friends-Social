@@ -1,8 +1,8 @@
-import { app, db, storage, auth } from "../../FirebaseConfig";
+import { db, storage, auth } from "../../FirebaseConfig";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { setDoc, doc } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import { useSelector, useDispatch } from "react-redux";
+import {createUserWithEmailAndPassword } from "firebase/auth";
+
 
 const reducer = (state = 0 , action) => {
 
@@ -25,8 +25,9 @@ const reducer = (state = 0 , action) => {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            const progress =
+            let progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              progress.toString()
           },
           (error) => {
             alert("An Error Occured During Uploading Your Picture");
@@ -50,7 +51,6 @@ const reducer = (state = 0 , action) => {
       })
       .catch((error) => {
        
-        const errorCode = error.code;
         const errorMessage = error.message;
         alert(errorMessage);
         // ..
