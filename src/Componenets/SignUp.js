@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -49,12 +49,67 @@ const Input = styled("input")({
 export default function SignUp() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { inputChangeSignup } = bindActionCreators(
-    actionCreators,
-    dispatch
-  );
+  const { inputChangeSignup } = bindActionCreators(actionCreators, dispatch);
   const user = useSelector((state) => state.inputChange);
   const inputRef = useRef(null);
+
+
+  const [obj, setObj] = useState({
+    errorFirstName: false,
+    errorLastName: false,
+    errorGender: false,
+    errorEmail: false,
+    errorPass: false,
+    text: " ",
+  });
+
+  const data = (id, subID, key, autoComp) => {
+    if (obj[key]) {
+      return (
+        <TextField
+          onChange={changeHandle}
+          autoComplete={autoComp}
+          name={id}
+          required
+          error
+          fullWidth
+          id={id}
+          label={subID}
+          autoFocus
+          helperText={obj.text}
+          type = {id==="password" ? "password" : ""}
+        />
+      );
+    } else {
+      return (
+        <TextField
+          onChange={changeHandle}
+          autoComplete={autoComp}
+          name={id}
+          required
+          fullWidth
+          id={id}
+          label={subID}
+          autoFocus
+          helperText=" "
+         type = {id==="password" ? "password" : ""}
+        />
+      );
+    }
+  };
+
+ 
+
+  const genderCol = () => {
+ 
+    if (obj.errorGender) {
+
+      return "red";
+    } else {
+  
+      return "secondary";
+    }
+  };
 
   const changeHandle = (e) => {
     if (e.target.id === "") {
@@ -95,7 +150,7 @@ export default function SignUp() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField
+                {/* <TextField
                   onChange={changeHandle}
                   autoComplete="given-name"
                   name="firstName"
@@ -104,10 +159,16 @@ export default function SignUp() {
                   id="firstName"
                   label="First Name"
                   autoFocus
-                />
+                /> */}
+                {data(
+                  "firstName",
+                  "First Name",
+                  "errorFirstName",
+                  "given-name"
+                )}
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField
+                {/* <TextField
                   onChange={changeHandle}
                   required
                   fullWidth
@@ -115,10 +176,12 @@ export default function SignUp() {
                   label="Last Name"
                   name="lastName"
                   autoComplete="family-name"
-                />
+                /> */}
+                {data("lastName", "Last Name", "errorLastName", "family-name")}
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                {data("email", "Email Address", "errorEmail", "email")}
+                {/* <TextField
                   onChange={changeHandle}
                   required
                   fullWidth
@@ -126,10 +189,11 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
-                />
+                /> */}
               </Grid>
               <Grid item xs={12}>
-                <TextField
+                {data("password", "Password", "errorPass", "new-password")}
+                {/* <TextField
                   onChange={changeHandle}
                   required
                   fullWidth
@@ -138,7 +202,7 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
+                /> */}
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl component="fieldset">
@@ -148,6 +212,9 @@ export default function SignUp() {
                     aria-label="gender"
                     id="gender"
                     onChange={changeHandle}
+                    sx={{
+                      color: genderCol()
+                    }}
                   >
                     <FormControlLabel
                       value="female"
@@ -160,6 +227,7 @@ export default function SignUp() {
                       label="Male"
                     />
                   </RadioGroup>
+                  <p className="error">{obj.errorGender ? "Please Select Your Gender" : " "}</p>
                 </FormControl>
               </Grid>
               <Grid item xs={12} sm={6} className="upload">
@@ -182,7 +250,9 @@ export default function SignUp() {
             </Grid>
             <Button
               onClick={() => {
-                dispatch(actionCreators.signUpuser(user, navigate, inputRef));
+                dispatch(
+                  actionCreators.signUpuser(user, navigate, inputRef, setObj)
+                );
               }}
               type="submit"
               fullWidth

@@ -110,7 +110,7 @@ export default function TransitionsPopper() {
          <div className="allPost">
 
           {userPost.map((e, index) => (
-            <Card className="wd-80" key={index}>
+            <Card className="wid" key={index}>
               <CardHeader
                 name={userInfo.firstName + " " + userInfo.lastName}
                 time={e.dateString + " " + e.timeString}

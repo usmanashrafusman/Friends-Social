@@ -113,7 +113,9 @@ code {
 
     .allPost{
       display: flex;
+      flex-direction: column;
       flex-wrap: wrap;
+      align-items: center;
       justify-content: center;
     }
 
@@ -214,4 +216,26 @@ a {
     background: #1976d2;
     transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     position: relative;
+}
+
+.error{
+    color: #d32f2f;
+    font-family: "Roboto","Helvetica","Arial",sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    line-height: 1.66;
+    letter-spacing: 0.03333em;
+    text-align: left;
+    margin-top: 3px;
+    margin-right: 14px;
+    margin-bottom: 0;
+    margin-left: 14px;
+}
+
+.wid{
+  width: 474px !important;
+}
+
+.hei {
+  height: 474px !important;
 }

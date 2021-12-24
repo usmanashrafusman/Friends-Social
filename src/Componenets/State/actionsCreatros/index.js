@@ -1,22 +1,24 @@
-export const loginUser=(email,password,navigate)=>{
+export const loginUser=(email,password,navigate,setObj)=>{
     return (dispatch)=>{
         dispatch({
             type:"login",
              email:email ,
              pass: password,
-             navigate : navigate
+             navigate : navigate,
+             setObj : setObj
         })
     }
 }
 
 
-export const signUpuser=(user,navigate,inputRef)=>{
+export const signUpuser=(user,navigate,inputRef,setObj)=>{
     return (dispatch)=>{
         dispatch({
             type:"signup",
             user : user,
             navigate : navigate,
-            inputRef : inputRef
+            inputRef : inputRef,
+            setObj : setObj
         })
     }
 }

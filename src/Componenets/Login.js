@@ -14,8 +14,8 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import {useDispatch} from 'react-redux'
-import { actionCreators } from './State/index';
+import { useDispatch } from "react-redux";
+import { actionCreators } from "./State/index";
 
 function Copyright(props) {
   return (
@@ -35,17 +35,90 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [obj, setObj] = useState({
+    errorEmail: false,
+    errorPass: false,
+    text: " ",
+  });
 
+  const emailStatus = () => {
+    if (obj.errorEmail) {
+      return (
+        <TextField
+          onChange={(e) => setEmail(e.target.value)}
+          margin="normal"
+          required
+          error
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          helperText={obj.text}
+        />
+      );
+    } else {
+      return (
+        <TextField
+          onChange={(e) => setEmail(e.target.value)}
+          margin="normal"
+          required
+          fullWidth
+          id="email"
+          label="Email Address"
+          name="email"
+          autoComplete="email"
+          autoFocus
+          helperText={obj.text}
+        />
+      );
+    }
+  };
+
+  const passWordStatus = () => {
+    if (obj.errorPass) {
+      return (
+        <TextField
+          onChange={(e) => setPassword(e.target.value)}
+          margin="normal"
+          required
+          error
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          helperText={obj.text}
+        />
+      );
+    } 
+  else {
+      return (
+        <TextField
+          onChange={(e) => setPassword(e.target.value)}
+          margin="normal"
+          required
+          fullWidth
+          name="password"
+          label="Password"
+          type="password"
+          id="password"
+          autoComplete="current-password"
+          helperText=" "
+        />
+      );
+    }
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
   };
 
   return (
@@ -91,18 +164,22 @@ export default function SignInSide() {
               onSubmit={handleSubmit}
               sx={{ mt: 1 }}
             >
-              <TextField
+              {emailStatus()}
+              {/* <TextField
               onChange={(e)=>setEmail(e.target.value)}
                 margin="normal"
                 required
+                error
                 fullWidth
                 id="email"
                 label="Email Address"
                 name="email"
                 autoComplete="email"
                 autoFocus
-              />
-              <TextField
+                helperText={obj.text}
+              /> */}
+              {passWordStatus()}
+              {/* <TextField
                  onChange={(e)=>setPassword(e.target.value)}
                 margin="normal"
                 required
@@ -112,14 +189,17 @@ export default function SignInSide() {
                 type="password"
                 id="password"
                 autoComplete="current-password"
-              />
+              /> */}
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
               <Button
-              
-onClick={()=>{dispatch(actionCreators.loginUser(email,password,navigate))}}
+                onClick={() => {
+                  dispatch(
+                    actionCreators.loginUser(email, password, navigate, setObj)
+                  );
+                }}
                 type="button"
                 fullWidth
                 variant="contained"

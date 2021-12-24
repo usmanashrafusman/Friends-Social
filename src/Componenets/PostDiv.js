@@ -56,7 +56,7 @@ export default function PostDiv() {
     return (
         <div className="allPost" style={{marginLeft : "75px"}}>
         {post.map((e, index) => (
-          <Card className="wd-80" key={index}>
+          <Card className="wid" key={index}>
             <CardHeader
               name={userInfo.firstName + " " + userInfo.lastName}
               time={e.dateString + " " + e.timeString}
