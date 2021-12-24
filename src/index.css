@@ -239,3 +239,18 @@ a {
 .hei {
   height: 474px !important;
 }
+
+.loadingGif{
+  position: fixed;
+  background: rgb(0 0 0 / 14%);
+  z-index: 1201;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  top: 0%;
+  left: 0%;
+  right: 0%;
+  bottom: 0%;
+}

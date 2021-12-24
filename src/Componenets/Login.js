@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { actionCreators } from "./State/index";
+import LoadingGif from "../Componenets/Images/giphy.gif";
 
 function Copyright(props) {
   return (
@@ -40,6 +41,7 @@ export default function SignInSide() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loadingStatus, setLoadingStatus] = useState(false);
   const [obj, setObj] = useState({
     errorEmail: false,
     errorPass: false,
@@ -75,7 +77,7 @@ export default function SignInSide() {
           name="email"
           autoComplete="email"
           autoFocus
-          helperText={obj.text}
+          helperText=" "
         />
       );
     }
@@ -98,8 +100,7 @@ export default function SignInSide() {
           helperText={obj.text}
         />
       );
-    } 
-  else {
+    } else {
       return (
         <TextField
           onChange={(e) => setPassword(e.target.value)}
@@ -122,108 +123,107 @@ export default function SignInSide() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
-        <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage:
-              "url(https://firebasestorage.googleapis.com/v0/b/teamreporter-smit-23613.appspot.com/o/SidePic.jpg?alt=media&token=49b2e69e-b274-4d6c-936b-5dc728cd25f2)",
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <Box
+    <>
+      <ThemeProvider theme={theme}>
+        {loadingStatus && (
+          <div className="loadingGif">
+            <img src={LoadingGif} alt="loading" />
+          </div>
+        )}
+        <Grid container component="main" sx={{ height: "100vh" }}>
+          <CssBaseline />
+          <Grid
+            item
+            xs={false}
+            sm={4}
+            md={7}
             sx={{
-              my: 8,
-              mx: 4,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
+              backgroundImage:
+                "url(https://firebasestorage.googleapis.com/v0/b/teamreporter-smit-23613.appspot.com/o/SidePic.jpg?alt=media&token=49b2e69e-b274-4d6c-936b-5dc728cd25f2)",
+              backgroundRepeat: "no-repeat",
+              backgroundColor: (t) =>
+                t.palette.mode === "light"
+                  ? t.palette.grey[50]
+                  : t.palette.grey[900],
+              backgroundSize: "cover",
+              backgroundPosition: "center",
             }}
+          />
+          <Grid
+            item
+            xs={12}
+            sm={8}
+            md={5}
+            component={Paper}
+            elevation={6}
+            square
           >
-            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-              <LockOutlinedIcon />
-            </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
-            </Typography>
             <Box
-              component="form"
-              noValidate
-              onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
+              sx={{
+                my: 8,
+                mx: 4,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
             >
-              {emailStatus()}
-              {/* <TextField
-              onChange={(e)=>setEmail(e.target.value)}
-                margin="normal"
-                required
-                error
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                helperText={obj.text}
-              /> */}
-              {passWordStatus()}
-              {/* <TextField
-                 onChange={(e)=>setPassword(e.target.value)}
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              /> */}
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-              <Button
-                onClick={() => {
-                  dispatch(
-                    actionCreators.loginUser(email, password, navigate, setObj)
-                  );
-                }}
-                type="button"
-                fullWidth
-                variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <LockOutlinedIcon />
+              </Avatar>
+              <Typography component="h1" variant="h5">
+                Sign in
+              </Typography>
+              <Box
+                component="form"
+                noValidate
+                onSubmit={handleSubmit}
+                sx={{ mt: 1 }}
               >
-                Sign In
-              </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link to="/" variant="body2">
-                    Forgot password?
-                  </Link>
+                {emailStatus()}
+
+                {passWordStatus()}
+
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  onClick={() => {
+                    dispatch(
+                      actionCreators.loginUser(
+                        email,
+                        password,
+                        navigate,
+                        setObj,
+                        setLoadingStatus
+                      )
+                    );
+                  }}
+                  type="button"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+                <Grid container>
+                  <Grid item xs>
+                    <Link to="/" variant="body2">
+                      Forgot password?
+                    </Link>
+                  </Grid>
+                  <Grid item>
+                    <Link to="/signup" variant="body2">
+                      {"Don't have an account? Sign Up"}
+                    </Link>
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <Link to="/signup" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
-                </Grid>
-              </Grid>
-              <Copyright sx={{ mt: 5 }} />
+                <Copyright sx={{ mt: 5 }} />
+              </Box>
             </Box>
-          </Box>
+          </Grid>
         </Grid>
-      </Grid>
-    </ThemeProvider>
+      </ThemeProvider>
+    </>
   );
 }

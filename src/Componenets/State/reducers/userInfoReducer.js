@@ -1,24 +1,16 @@
+const initialState = {};
 
-
-const initialState = {}
-
-const reducer = (state=initialState, action)=>{
-
-    if (action.type === "UserLoggedIn") {
-     
-      if(state){
-        state = false
-      }
-      else {
-        state = true
-      }
-         
-          return state;
+const reducer = (state = initialState, action) => {
+  if (action.type === "UserLoggedIn") {
+    if (state) {
+      state = false;
+    } else {
+      state = true;
     }
-    else {
-        return state
-    }
-}
+
+    return state;
+  } else {
+    return state;
+  }
+};
 export default reducer;
-
-

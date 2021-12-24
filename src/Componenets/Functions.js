@@ -4,10 +4,9 @@ import {
   collection,
   query,
   where,
-  getDocs, 
-
+  getDocs,
 } from "firebase/firestore";
-import {db, auth } from "./FirebaseConfig";
+import { db, auth } from "./FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
 import { styled, alpha } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
@@ -19,13 +18,9 @@ export const gettingUserInfo = (setUserInfo) => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       const uid = user.uid;
-      // console.log(user)
       onSnapshot(doc(db, "Accounts", uid), (doc) => {
-        setUserInfo(doc.data())
-      })
-
-  
-
+        setUserInfo(doc.data());
+      });
     }
   });
 };
@@ -149,37 +144,25 @@ export const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-export const searchResult =async (
+export const searchResult = async (
   inputSearch,
   setSearchedResult,
   searchedResult
 ) => {
   const q = query(
     collection(db, "Accounts"),
-    where('fullName', '>=', inputSearch),where('fullName', '<=', inputSearch+ "\uf8ff")
+    where("fullName", ">=", inputSearch),
+    where("fullName", "<=", inputSearch + "\uf8ff")
   );
-  
+
   const querySnapshot = await getDocs(q);
   querySnapshot.forEach((doc) => {
     setSearchedResult((val) => [...val, doc.data()]);
-    // console.log(doc.id, " => ", doc.data());
-});
-  
-
+  });
 };
 
-export const showUser = (id, navigate) =>{
-
-  navigate(`/profile/${id}`)
-
-
-}
-
-
-
-
-
-
-
+export const showUser = (id, navigate) => {
+  navigate(`/profile/${id}`);
+};
 
 //// Mini Drawer Functions

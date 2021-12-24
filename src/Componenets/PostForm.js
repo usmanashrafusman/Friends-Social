@@ -19,7 +19,7 @@ export default function PostForm() {
   const [caption, setCaption] = useState("");
 
   const UploadPost = () => {
-    setCaption("")
+    setCaption("");
     if (caption.length >= 1) {
       uploadUserPost(caption, files, uid);
       postFromReducer(false);

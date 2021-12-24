@@ -15,23 +15,15 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { updatePassword } from "firebase/auth";
 
-
-
-
 export default function ControlledAccordions() {
   const [userInfo, setUserInfo] = useState({});
   const [userID, setUserID] = useState("");
-
-
-
-
 
   useLayoutEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const uid = user.uid;
         setUserID(uid);
-        // console.log(user);
         onSnapshot(doc(db, "Accounts", uid), (doc) => {
           setUserInfo(doc.data());
         });
@@ -39,29 +31,28 @@ export default function ControlledAccordions() {
     });
   }, []);
 
-
-  const updateNewPassword=()=>{
+  const updateNewPassword = () => {
     const user = auth.currentUser;
-    let newPassword = userUpdateVal.password 
-    updatePassword(user, userUpdateVal.password).then(() => {
-      const updateRef = doc(db, "Accounts", userID);
-      updateDoc(updateRef, {
-        password: newPassword,
-      }).then(() => {
-        alert("Password Is Updated")
-        setUpdateUser({ ...updateUser, password: false });
+    let newPassword = userUpdateVal.password;
+    updatePassword(user, userUpdateVal.password)
+      .then(() => {
+        const updateRef = doc(db, "Accounts", userID);
+        updateDoc(updateRef, {
+          password: newPassword,
+        }).then(() => {
+          alert("Password Is Updated");
+          setUpdateUser({ ...updateUser, password: false });
+        });
+      })
+      .catch((error) => {
+        alert(error.message);
       });
-    }).catch((error) => {
-      alert(error.message)
-    });
-  }
-  
+  };
 
   const updateProvidedData = (id, val) => {
-    if (id === "password"){
-      updateNewPassword()
-    }
-    else{
+    if (id === "password") {
+      updateNewPassword();
+    } else {
       if (id === "email") {
         let val = userUpdateVal.email;
         if (val !== userInfo.email) {
@@ -91,7 +82,6 @@ export default function ControlledAccordions() {
         setUpdateUser({ ...updateUser, [id]: false });
       }
     }
- 
   };
 
   const [updateUser, setUpdateUser] = useState({
@@ -121,7 +111,6 @@ export default function ControlledAccordions() {
             value={userUpdateVal[id]}
             onChange={(e) => {
               setUserUpdateVal({ ...userUpdateVal, [id]: e.target.value });
-              // console.log(userUpdateVal);
             }}
           />
         );
@@ -138,7 +127,6 @@ export default function ControlledAccordions() {
                 label="Gender"
                 onChange={(e) => {
                   setUserUpdateVal({ ...userUpdateVal, [id]: e.target.value });
-                  // console.log(userUpdateVal);
                 }}
               >
                 <MenuItem value={"Male"}>Male</MenuItem>
@@ -147,14 +135,13 @@ export default function ControlledAccordions() {
               </Select>
             </FormControl>
           </Box>
-    
         );
       }
     }
   };
 
   const dataRowPass = (id) => {
-    let star = ""
+    let star = "";
     if (!updateUser[id]) {
       if (userInfo[id]) {
         let enc = userInfo[id].length;
@@ -168,18 +155,17 @@ export default function ControlledAccordions() {
     } else {
       return (
         <TextField
-        type = "password"
+          type="password"
           value={userUpdateVal[id]}
           onChange={(e) => {
             setUserUpdateVal({ ...userUpdateVal, [id]: e.target.value });
-            // console.log(userUpdateVal);
           }}
         />
       );
     }
   };
 
-const icon = (id) => {
+  const icon = (id) => {
     if (updateUser[id]) {
       return (
         <ArrowDownwardIcon
@@ -187,7 +173,6 @@ const icon = (id) => {
           onClick={() => {
             updateProvidedData(id, userUpdateVal[id]);
           }}
-          // onClick={updateNewPassword}
         />
       );
     } else {
@@ -262,7 +247,7 @@ const icon = (id) => {
           id="panel3bh-header"
         >
           <Typography sx={{ width: "33%", flexShrink: 0 }}>Password</Typography>
-       
+
           {dataRowPass("password")}
         </AccordionSummary>
       </Accordion>

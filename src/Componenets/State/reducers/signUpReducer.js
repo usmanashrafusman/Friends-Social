@@ -5,6 +5,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 
 const reducer = (state = 0, action) => {
   if (action.type === "signup") {
+   
     action.setObj({
       errorFirstName: false,
       errorLastName: false,
@@ -46,13 +47,15 @@ const reducer = (state = 0, action) => {
         text: "Please Select Your Gender",
       });
     } else {
+      action.setLoadingStatus(true)
       createUserWithEmailAndPassword(
         auth,
         action.user.email,
         action.user.password
       )
         .then((userCredential) => {
-          alert("Your Account Is Created");
+         
+          // alert("Your Account Is Created");
           const user = userCredential.user;
           const uid = user.uid;
           let d = new Date();
@@ -84,8 +87,8 @@ const reducer = (state = 0, action) => {
                     fullName,
                     userID: uid,
                   });
-
                   action.navigate("/home");
+                  action.setLoadingStatus(false)
                 });
               }
             );
@@ -101,11 +104,13 @@ const reducer = (state = 0, action) => {
               userID: uid,
             }).then(() => {
               action.navigate("/home");
+              action.setLoadingStatus(false)
             });
           }
         })
         .catch((error) => {
           const errorMessage = error.message;
+          action.setLoadingStatus(false)
           if (errorMessage === "Firebase: Error (auth/invalid-email)."){
             action.setObj({
               ...obj,
