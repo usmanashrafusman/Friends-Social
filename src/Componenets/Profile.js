@@ -9,7 +9,7 @@ import CardFooter from "./CardFooter";
 
 export default function Profile() {
   const { docID } = useParams();
-  const [currentUer, setCrrentUser] = useState("");
+  const [currentUer, setCrrentUser] = useState(null);
   const [userPost, setUserPost] = useState([]);
 
   useLayoutEffect(() => {
@@ -23,7 +23,8 @@ export default function Profile() {
   }, [docID]);
 
   return (
-    <div className="userNav">
+    <>
+    {currentUer !== null &&  (  <div className="userNav">
       <img
         className="userPic"
         src={currentUer.userPhoto}
@@ -55,6 +56,7 @@ export default function Profile() {
           </Card>
         ))}
       </div>
-    </div>
+    </div>)}
+    </>
   );
 }

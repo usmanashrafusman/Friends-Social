@@ -55,7 +55,7 @@ export default function ControlledAccordions() {
     } else {
       if (id === "email") {
         let val = userUpdateVal.email;
-        if (val !== userInfo.email) {
+        if (val !== userInfo.email && val !== "") {
           updateEmail(auth.currentUser, val)
             .then(() => {
               const updateRef = doc(db, "Accounts", userID);
@@ -70,7 +70,14 @@ export default function ControlledAccordions() {
             });
           setUpdateUser({ ...updateUser, [id]: false });
         } else {
-          alert("Please Provide Differnt Email To Update");
+          if (val === userInfo.email){
+            setUpdateUser({ ...updateUser, [id]: false });
+            alert("Please Provide Differnt Email To Update");
+          }
+          else if (val === ""){
+            setUpdateUser({ ...updateUser, [id]: false });
+            alert("Please Provide Email To Update");
+          }
         }
       } else if (val.length >= 2 && val !== userInfo[id]) {
         const updateRef = doc(db, "Accounts", userInfo.userID);
@@ -79,6 +86,9 @@ export default function ControlledAccordions() {
         }).then(() => {
           alert("Update Sucessfully");
         });
+        setUpdateUser({ ...updateUser, [id]: false });
+      }
+      else {
         setUpdateUser({ ...updateUser, [id]: false });
       }
     }
@@ -141,6 +151,7 @@ export default function ControlledAccordions() {
   };
 
   const dataRowPass = (id) => {
+    // setUserUpdateVal({ ...userUpdateVal, [id]: "" });
     let star = "";
     if (!updateUser[id]) {
       if (userInfo[id]) {
@@ -153,10 +164,11 @@ export default function ControlledAccordions() {
 
       return <Typography sx={{ color: "text.secondary" }}>{star}</Typography>;
     } else {
+      
       return (
         <TextField
-          type="password"
-          value={userUpdateVal[id]}
+          // type="password"
+          value={userUpdateVal[id] ? userUpdateVal[id] : "" }
           onChange={(e) => {
             setUserUpdateVal({ ...userUpdateVal, [id]: e.target.value });
           }}
@@ -168,20 +180,27 @@ export default function ControlledAccordions() {
   const icon = (id) => {
     if (updateUser[id]) {
       return (
-        <ArrowDownwardIcon
-          id="firstName"
-          onClick={() => {
-            updateProvidedData(id, userUpdateVal[id]);
-          }}
-        />
+        // <ArrowDownwardIcon
+        //   id="firstName"
+        //   onClick={() => {
+        //     updateProvidedData(id, userUpdateVal[id]);
+        //   }}
+        // />
+        <i class="fas fa-arrow-up"
+        onClick={() => {
+          updateProvidedData(id, userUpdateVal[id]);
+        }}></i>
       );
     } else {
       return (
-        <EditIcon
-          onClick={() => {
-            setUpdateUser({ ...updateUser, [id]: true });
-          }}
-        />
+        // <EditIcon
+        //   onClick={() => {
+        //     setUpdateUser({ ...updateUser, [id]: true });
+        //   }}
+        // />
+        <i class="fas fa-pencil-alt pencil"   onClick={() => {
+          setUpdateUser({ ...updateUser, [id]: true });
+        }}></i>
       );
     }
   };
@@ -193,7 +212,8 @@ export default function ControlledAccordions() {
   };
 
   return (
-    <div>
+    <>
+  {userInfo !== {} &&(  <div>
       <Accordion
         expanded={expanded === "panel1"}
         onChange={handleChange("panel1")}
@@ -266,6 +286,7 @@ export default function ControlledAccordions() {
           </Typography>
         </AccordionSummary>
       </Accordion>
-    </div>
+    </div>)}
+    </>
   );
 }
