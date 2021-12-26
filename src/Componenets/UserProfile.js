@@ -14,7 +14,7 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import { setDoc } from "firebase/firestore";
+import { updateDoc, setDoc } from "firebase/firestore";
 
 import Stack from "@mui/material/Stack";
 
@@ -48,7 +48,7 @@ export default function TransitionsPopper() {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
             let postPicture = downloadURL;
-            setDoc(doc(db, "Accounts", uid), {
+            updateDoc(doc(db, "Accounts", uid), {
               userPhoto:postPicture
             });
 
@@ -75,8 +75,19 @@ export default function TransitionsPopper() {
         onSnapshot(doc(db, "Accounts", uid), (doc) => {
           setUserInfo(doc.data());
         });
+
+        onSnapshot(collection(db, "Accounts", uid, "post"), (snapShot) =>
+        setUserPost(snapShot.docs.map((doc) => doc.data()))
+      );
       }
+
+
+  
+
     });
+
+
+
   }, []);
 
   const [open, setOpen] = useState(false);

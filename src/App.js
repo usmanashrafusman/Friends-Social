@@ -26,7 +26,7 @@ function App() {
 
           <Route exact path="/signup" element={<SignUp />}/>
 
-          <Route exact path="/home" element={<Home />}/>
+          <Route exact path="/home" element={<><Home /><PostDiv/></>}/>
 
           <Route exact path="/post" element={<><Home /><PostDiv/></>}/>
 

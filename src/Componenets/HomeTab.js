@@ -11,7 +11,7 @@ export default function HomeTab() {
     <ListItem
       button
       onClick={() => {
-        navigate("/post");
+        navigate("/home");
       }}
     >
       <ListItemIcon>
