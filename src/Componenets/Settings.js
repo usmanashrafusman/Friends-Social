@@ -6,8 +6,6 @@ import { onAuthStateChanged, updateEmail } from "firebase/auth";
 import { auth, db } from "./FirebaseConfig";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import TextField from "@mui/material/TextField";
-import EditIcon from "@mui/icons-material/Edit";
-import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -38,7 +36,7 @@ export default function ControlledAccordions() {
       .then(() => {
         const updateRef = doc(db, "Accounts", userID);
         updateDoc(updateRef, {
-          password: newPassword,
+          password: newPassword
         }).then(() => {
           alert("Password Is Updated");
           setUpdateUser({ ...updateUser, password: false });
@@ -60,7 +58,7 @@ export default function ControlledAccordions() {
             .then(() => {
               const updateRef = doc(db, "Accounts", userID);
               updateDoc(updateRef, {
-                email: val,
+                email: val
               }).then(() => {
                 alert("Email Is Upadated");
               });
@@ -70,11 +68,10 @@ export default function ControlledAccordions() {
             });
           setUpdateUser({ ...updateUser, [id]: false });
         } else {
-          if (val === userInfo.email){
+          if (val === userInfo.email) {
             setUpdateUser({ ...updateUser, [id]: false });
             alert("Please Provide Differnt Email To Update");
-          }
-          else if (val === ""){
+          } else if (val === "") {
             setUpdateUser({ ...updateUser, [id]: false });
             alert("Please Provide Email To Update");
           }
@@ -82,13 +79,12 @@ export default function ControlledAccordions() {
       } else if (val.length >= 2 && val !== userInfo[id]) {
         const updateRef = doc(db, "Accounts", userInfo.userID);
         updateDoc(updateRef, {
-          [id]: val,
+          [id]: val
         }).then(() => {
           alert("Update Sucessfully");
         });
         setUpdateUser({ ...updateUser, [id]: false });
-      }
-      else {
+      } else {
         setUpdateUser({ ...updateUser, [id]: false });
       }
     }
@@ -98,7 +94,7 @@ export default function ControlledAccordions() {
     firstName: false,
     lastName: false,
     Email: false,
-    gender: false,
+    gender: false
   });
 
   const [userUpdateVal, setUserUpdateVal] = useState({
@@ -106,7 +102,7 @@ export default function ControlledAccordions() {
     lastName: "",
     password: "",
     email: "",
-    gender: "",
+    gender: ""
   });
 
   const dataRow = (id) => {
@@ -164,11 +160,10 @@ export default function ControlledAccordions() {
 
       return <Typography sx={{ color: "text.secondary" }}>{star}</Typography>;
     } else {
-      
       return (
         <TextField
           // type="password"
-          value={userUpdateVal[id] ? userUpdateVal[id] : "" }
+          value={userUpdateVal[id] ? userUpdateVal[id] : ""}
           onChange={(e) => {
             setUserUpdateVal({ ...userUpdateVal, [id]: e.target.value });
           }}
@@ -186,10 +181,12 @@ export default function ControlledAccordions() {
         //     updateProvidedData(id, userUpdateVal[id]);
         //   }}
         // />
-        <i class="fas fa-arrow-up"
-        onClick={() => {
-          updateProvidedData(id, userUpdateVal[id]);
-        }}></i>
+        <i
+          class="fas fa-arrow-up"
+          onClick={() => {
+            updateProvidedData(id, userUpdateVal[id]);
+          }}
+        ></i>
       );
     } else {
       return (
@@ -198,9 +195,12 @@ export default function ControlledAccordions() {
         //     setUpdateUser({ ...updateUser, [id]: true });
         //   }}
         // />
-        <i class="fas fa-pencil-alt pencil"   onClick={() => {
-          setUpdateUser({ ...updateUser, [id]: true });
-        }}></i>
+        <i
+          class="fas fa-pencil-alt pencil"
+          onClick={() => {
+            setUpdateUser({ ...updateUser, [id]: true });
+          }}
+        ></i>
       );
     }
   };
@@ -213,80 +213,88 @@ export default function ControlledAccordions() {
 
   return (
     <>
-  {userInfo !== {} &&(  <div>
-      <Accordion
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-      >
-        <AccordionSummary
-          expandIcon={icon("firstName")}
-          aria-controls="panel1bh-content"
-          id="panel1bh-header"
-        >
-          <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            First Name
-          </Typography>
-          {dataRow("firstName")}
-        </AccordionSummary>
-      </Accordion>
-      <Accordion
-        expanded={expanded === "panel2"}
-        onChange={handleChange("panel2")}
-      >
-        <AccordionSummary
-          expandIcon={icon("lastName")}
-          aria-controls="panel2bh-content"
-          id="panel2bh-header"
-        >
-          <Typography sx={{ width: "33%", flexShrink: 0 }}>
-            Last Name
-          </Typography>
-          {dataRow("lastName")}
-        </AccordionSummary>
-      </Accordion>
-      <Accordion
-        expanded={expanded === "panel3"}
-        onChange={handleChange("panel3")}
-      >
-        <AccordionSummary
-          expandIcon={icon("email")}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography sx={{ width: "33%", flexShrink: 0 }}>Email</Typography>
-          {dataRow("email")}
-        </AccordionSummary>
-      </Accordion>
-      <Accordion
-        expanded={expanded === "panel3"}
-        onChange={handleChange("panel3")}
-      >
-        <AccordionSummary
-          expandIcon={icon("password")}
-          aria-controls="panel3bh-content"
-          id="panel3bh-header"
-        >
-          <Typography sx={{ width: "33%", flexShrink: 0 }}>Password</Typography>
+      {userInfo !== {} && (
+        <div>
+          <Accordion
+            expanded={expanded === "panel1"}
+            onChange={handleChange("panel1")}
+          >
+            <AccordionSummary
+              expandIcon={icon("firstName")}
+              aria-controls="panel1bh-content"
+              id="panel1bh-header"
+            >
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                First Name
+              </Typography>
+              {dataRow("firstName")}
+            </AccordionSummary>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel2"}
+            onChange={handleChange("panel2")}
+          >
+            <AccordionSummary
+              expandIcon={icon("lastName")}
+              aria-controls="panel2bh-content"
+              id="panel2bh-header"
+            >
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                Last Name
+              </Typography>
+              {dataRow("lastName")}
+            </AccordionSummary>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel3"}
+            onChange={handleChange("panel3")}
+          >
+            <AccordionSummary
+              expandIcon={icon("email")}
+              aria-controls="panel3bh-content"
+              id="panel3bh-header"
+            >
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                Email
+              </Typography>
+              {dataRow("email")}
+            </AccordionSummary>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel3"}
+            onChange={handleChange("panel3")}
+          >
+            <AccordionSummary
+              expandIcon={icon("password")}
+              aria-controls="panel3bh-content"
+              id="panel3bh-header"
+            >
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                Password
+              </Typography>
 
-          {dataRowPass("password")}
-        </AccordionSummary>
-      </Accordion>
-      <Accordion
-        expanded={expanded === "panel4"}
-        onChange={handleChange("panel4")}
-      >
-        <AccordionSummary
-          expandIcon={icon("gender")}
-          aria-controls="panel4bh-content"
-          id="panel4bh-header"
-        >
-          <Typography sx={{ width: "33%", flexShrink: 0 }}>Gender</Typography>
-          <Typography sx={{ color: "text.secondary" }}>
-            {dataRow("gender")}
-          </Typography>
-        </AccordionSummary>
-      </Accordion>
-    </div>)}
+              {dataRowPass("password")}
+            </AccordionSummary>
+          </Accordion>
+          <Accordion
+            expanded={expanded === "panel4"}
+            onChange={handleChange("panel4")}
+          >
+            <AccordionSummary
+              expandIcon={icon("gender")}
+              aria-controls="panel4bh-content"
+              id="panel4bh-header"
+            >
+              <Typography sx={{ width: "33%", flexShrink: 0 }}>
+                Gender
+              </Typography>
+              <Typography sx={{ color: "text.secondary" }}>
+                {dataRow("gender")}
+              </Typography>
+            </AccordionSummary>
+          </Accordion>
+        </div>
+      )}
     </>
   );
 }

@@ -113,10 +113,11 @@ code {
 
     .allPost{
       display: flex;
-      flex-direction: column-reverse;
+      /* flex-direction: column-reverse; */
+      flex-direction: column;
       flex-wrap: wrap;
       align-items: center;
-      justify-content: center;
+      /* justify-content: center; */
     }
 
     .edit{
@@ -147,16 +148,27 @@ code {
       position: fixed;
       background: #fff;
       color: #000;
+      z-index: 1308;
       /* top: 3%; */
-      width: 290px;
+      width: 240px;
     }
 
-  .userPic { height: 250px;
+  .userPicDiv { 
+    position: relative;
+    bottom: 50%;
+    height: 250px;
     border: 5px solid #1976d2;
     width: 250px;
     border-radius: 50%;}
 
-  .userNav>p{
+    .userPic{
+      position: relative;
+      height: 250px;
+      width: 250px;
+      border-radius: 50%;
+    }
+
+  .info>p{
     font-family: 'Poppins', sans-serif;
     font-size: 24px;
     /* align-self: flex-start; */
@@ -165,14 +177,32 @@ code {
     line-height: 0.7;
   }
 
+  .info{margin-top:8%;}
 
+  @media screen and (max-width: 910px) {
+    .info{margin-top:12%;}
+  }
+
+  @media screen and (max-width: 620px) {
+    .info{margin-top:16%;}
+  }
+
+  @media screen and (max-width: 410px) {
+    .info{margin-top:20%;}
+  }
+
+  @media screen and (max-width: 380px) {
+    .info{margin-top:24%;}
+  }
+
+  @media screen and (max-width: 250px) {
+    .info{margin-top:28%;}
+  }
  
   .userNav{
-    align-items: center;
+    width: 65%;
+    /* align-items: center; */
     flex-direction: column;
-    /* height: 250px; */
-    /* background-color: red; */
-    margin-left: 75px;
     display: flex;
     justify-content: space-evenly;
   }
@@ -195,6 +225,7 @@ a {
   justify-content: space-evenly;
   align-items: center;
   color: #706e6e;
+  cursor: pointer;
 }
 
 .wd-80{
@@ -258,4 +289,202 @@ a {
 .pencil{
   font-size: 20px;
   color: #6c6b6b;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 3px grey;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #125eaa;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #044381;
+}
+
+.navlinks{
+    background: #fff;
+    /* border-left: 1px solid #1976d2; */
+    /* border-right: 1px solid #1976dfw2; */
+    /* border-bottom: 1px solid #1976d2; */
+    height: 50px;
+    width: 65%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    position: fixed;
+    z-index: 1204;
+}
+
+.navlinks-wrapper{
+  height: 50px;
+  width: 100%;
+}
+
+.navlinks svg {
+  font-size: 30px;
+}
+.whats{
+  margin-left: 20px;
+  background: #eff2f5;
+  outline: none;
+  border: none;
+  border-radius: 999px;
+  padding: 10px;
+  width: 350px;
+}
+
+
+.statusBar, .statusAction {
+  display: flex;
+}
+
+.statusBar{
+  padding:25px 0px;
+}
+
+.statusAction{
+  width: 100%;
+    display: flex;
+    border: 1px solid #cdc2c2;
+    justify-content: space-evenly;
+}
+.action{
+  cursor: pointer;
+  width: 33.33%;
+  padding: 10px;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+}
+
+
+
+.mainStatas{
+  width: 474px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 30px 0px 0px 0px;
+  margin: 10px 0px;
+  box-shadow: 5px 5px 5px #c9bdbd;
+  background: #fffefe;
+  align-self: center;
+}
+
+.coverPic{
+  height: 350px;
+  width: 100%;
+  /* box-shadow: -1px 0px 26px #0d0c0c; */
+  border-radius: 25px;
+}
+
+.cover{
+  width: 100%;
+}
+
+.pic {
+
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+}
+
+.coverDiv{
+  width: 100%;
+  align-items: center;
+  display: flex;
+  height: 350px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.updatePic{
+  background: rgb(25 118 210);
+  cursor: pointer;
+  border-radius: 50%;
+  color: #fff;
+  padding: 8px;
+  left: 75%;
+  bottom: 15%;
+  position: absolute;
+
+}
+
+.updatePicIco{
+  cursor: pointer;
+}
+
+.emoji-picker-react{
+  width: 100%!important;
+}
+
+.wid25{
+  position: fixed;
+  z-index: 1204;
+  width: 17.5%;
+}
+
+
+  /* CSS For Material Elements */
+
+  .navbar-wrapper {
+width: 100%;
+    min-height: 56px;
+}
+
+@media (min-width: 0px) and (orientation: landscape){
+  .navbar-wrapper {
+
+      min-height: 48px;
+  }
+}
+
+@media (min-width: 600px){
+
+  .navbar-wrapper {
+    
+      min-height: 64px;
+  }
+}
+
+.sideBar-wrapper{
+  width: 17.5%;
+  height: 100vh;
+}
+
+.comment{
+  margin-left: 10px;
+    background: #f0ebeb;
+    color: #000;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.photoBtn{
+  cursor: pointer;
+  width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.people{
+  font-size: 15px;
+    text-align: left;
+    color: #3b3e40;
+    font-weight: 550;
+    margin-left: 8px;
 }

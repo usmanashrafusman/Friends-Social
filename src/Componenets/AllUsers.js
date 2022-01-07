@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db, auth } from "./FirebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
-import CardHeader from "./CardHeader";
+import CardHeader from "@mui/material/CardHeader";
+import Avatar from "@mui/material/Avatar";
 
 export default function AllUsers() {
   const [allUsers, setAllUsers] = useState([]);
@@ -18,13 +19,13 @@ export default function AllUsers() {
   }, []);
 
   return (
-    <div className="container" style={{ marginLeft: "75px" }}>
+    <div className="container">
+    <p className="people">Peoples you may know</p>
       {allUsers.map((e, index) => (
-        <CardHeader
+          <CardHeader
           key={index}
-          src={e.userPhoto}
-          name={e.firstName + " " + e.lastName}
-        />
+          avatar={<Avatar alt={e.firstName} src={e.userPhoto} />}
+          title={e.firstName + " " + e.lastName}/>
       ))}
     </div>
   );

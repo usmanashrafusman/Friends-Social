@@ -44,7 +44,7 @@ function Copyright(props) {
 const theme = createTheme();
 
 const Input = styled("input")({
-  display: "none",
+  display: "none"
 });
 
 export default function SignUp() {
@@ -61,7 +61,7 @@ export default function SignUp() {
     errorGender: false,
     errorEmail: false,
     errorPass: false,
-    text: " ",
+    text: " "
   });
 
   const data = (id, subID, key, autoComp) => {
@@ -134,7 +134,7 @@ export default function SignUp() {
               marginTop: 8,
               display: "flex",
               flexDirection: "column",
-              alignItems: "center",
+              alignItems: "center"
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -181,7 +181,7 @@ export default function SignUp() {
                       id="gender"
                       onChange={changeHandle}
                       sx={{
-                        color: genderCol(),
+                        color: genderCol()
                       }}
                     >
                       <FormControlLabel

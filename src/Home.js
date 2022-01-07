@@ -1,9 +1,9 @@
 import React from 'react'
-import MiniDrawer from './Componenets/MiniDrawer'
+import Navbar from './Componenets/Navbar'
 export default function Home() {
   return (
     <>
-   <MiniDrawer/>
+  <Navbar/>
    </>
 
   )

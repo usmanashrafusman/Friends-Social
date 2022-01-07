@@ -11,7 +11,7 @@ export default function CardHead(props) {
       }}
     >
       <Avatar alt={props.name} src={props.src} />
-      <p>{props.name}</p>
+      <p style={{cursor:"pointer"}}>{props.name}</p>
     </div>
   );
 }

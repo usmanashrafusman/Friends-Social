@@ -57,10 +57,11 @@ export const userLogged=(payload)=> {
 }
 
 
-export const userPOP=()=> {
+export const userPOP=(payload)=> {
     return (dispatch)=>{
         dispatch({
-            type:"userInfoClicked",
+            type:"postReducer",
+            payload
         })
     }
 }
@@ -69,6 +70,16 @@ export const postFromReducer=(payload)=> {
     return (dispatch)=>{
         dispatch({
             type:"postFromClicked",
+            payload
+        })
+    }
+}
+
+
+export const postDesc=(payload)=> {
+    return (dispatch)=>{
+        dispatch({
+            type:"postDesc",
             payload
         })
     }

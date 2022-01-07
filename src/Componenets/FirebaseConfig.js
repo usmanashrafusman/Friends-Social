@@ -2,6 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAargGSVcs-yN2b65ijEtOIsYjxlKudM1U",
   authDomain: "friends-socail.firebaseapp.com",

@@ -15,7 +15,7 @@ import { doc, setDoc, updateDoc, arrayUnion, arrayRemove, addDoc , collection , 
 import { db } from './FirebaseConfig'
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import ArrowCircleRightRoundedIcon from '@mui/icons-material/ArrowCircleRightRounded';
-import { Info } from './PostDiv'
+import { Info } from './UserPost'
 import Picker from "emoji-picker-react";
 
 

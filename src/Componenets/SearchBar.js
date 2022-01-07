@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Search,
   SearchIconWrapper,
   StyledInputBase,
-  showUser,
+  showUser
 } from "./Functions";
 import Stack from "@mui/material/Stack";
 import SearchIcon from "@mui/icons-material/Search";
@@ -11,67 +11,93 @@ import { useNavigate } from "react-router-dom";
 import SuggestUsers from "./SuggestUsers";
 import { db } from "./FirebaseConfig";
 import { collection, query, where, getDocs } from "firebase/firestore";
+import { UserInfo } from "../App";
+import LoadingGif from "../Componenets/Images/giphy.gif";
 
 export default function SearchBar() {
-  const inputed = useRef(null);
-
+  const userInfo = useContext(UserInfo);
+  const [searchQuery, setSearchQuery] = useState("");
   const [searchedResult, setSearchedResult] = useState([]);
 
-  const showResults = async () => {
-    setSearchedResult([]);
-    let queryS = inputed.current.children[0].value;
-    queryS = queryS.split(" ").join("").toLowerCase();
-    setSearchedResult([]);
-    const q = query(
-      collection(db, "Accounts"),
-      where("fullName", ">=", queryS),
-      where("fullName", "<=", queryS + "\uf8ff")
-    );
-    const querySnapshot = await getDocs(q);
-    setSearchedResult([]);
-    querySnapshot.forEach((doc) => {
-      setSearchedResult((val) => [...val, doc.data()]);
-    });
-
-    if (queryS.length === 0) {
+  useEffect(() => {
+    const getSearchRes = async () => {
+      let queryS = searchQuery;
+      queryS = queryS.split(" ").join("").toLowerCase();
+      const q = query(
+        collection(db, "Accounts"),
+        where("fullName", ">=", queryS),
+        where("fullName", "<=", queryS + "\uf8ff")
+      );
+      const querySnapshot = await getDocs(q);
       setSearchedResult([]);
-    }
-  };
+      querySnapshot.forEach((doc) => {
+        if (doc.data().userID !== userInfo.userID) {
+          setSearchedResult((val) => [...val, doc.data()]);
+        }
+      });
+
+      if (queryS.length === 0) {
+        setSearchedResult([]);
+      }
+    };
+    getSearchRes();
+  }, [searchQuery, userInfo.userID]);
 
   const navigate = useNavigate();
 
   return (
     <>
-      <Stack spacing={2} sx={{ width: 300 }}>
+      <Stack spacing={2} sx={{ width: 250 }}>
         <Search>
           <SearchIconWrapper>
             <SearchIcon />
           </SearchIconWrapper>
           <StyledInputBase
+            value={searchQuery}
             placeholder="Search…"
-            ref={inputed}
-            onChange={() => {
+            // onFocus={searchOnFocus}
+            onChange={(e) => {
               setSearchedResult([]);
-              showResults();
+              // showResults();
+              setSearchQuery(e.target.value);
             }}
             inputProps={{ "aria-label": "search" }}
           />
-          <div className="Results" spacing={2} sx={{ width: 300 }}>
-            {searchedResult.map((e, index) => {
-              return (
-                <SuggestUsers
-                  show={() => {
-                    showUser(e.userID, navigate);
-                  }}
-                  set={() => {
-                    setSearchedResult([]);
-                  }}
-                  key={index}
-                  src={e.userPhoto}
-                  name={e.firstName + " " + e.lastName}
-                />
-              );
-            })}
+          <div className="Results" spacing={2} sx={{ width: 250 }}>
+            {searchQuery !== "" && (
+              <>
+                {searchedResult.length === 0 ? (
+                  <>
+                    <div className="userCl">
+                      <img
+                        style={{ width: "100%", height: "220px" }}
+                        src={LoadingGif}
+                        alt="No Results Found"
+                      />
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {searchedResult.map((e, index) => {
+                      return (
+                        <SuggestUsers
+                          show={() => {
+                            showUser(e.userID, navigate);
+                          }}
+                          set={() => {
+                            setSearchedResult([]);
+                            setSearchQuery("");
+                          }}
+                          key={index}
+                          src={e.userPhoto}
+                          name={e.firstName + " " + e.lastName}
+                        />
+                      );
+                    })}
+                  </>
+                )}
+              </>
+            )}
           </div>
         </Search>
       </Stack>
